@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Steelheart Esports</title>
+<meta name="description" content="Steelheart Esports – esportová organizácia z Ostravy. CS2, League of Legends, Valorant, Dota 2.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: oceľové pláty pod sebou, sticky navigácia; každá sekcia = jedna požiadavka zo zadania. Vedome jednotémová tmavá „hutnícka" identita. */
+:root{
+  --slag:#111214;      /* pozadie – troska */
+  --plate:#1a1c1f;     /* povrch – plech */
+  --plate-2:#222529;
+  --rivet:#33373d;     /* linky */
+  --steel:#d6dadf;     /* text */
+  --ash:#8d939b;       /* tlmený text */
+  --melt:#ff6b1a;      /* roztavená oceľ */
+  --spark:#ffc857;     /* žeravá iskra */
+  --ember:#c4321b;     /* tmavá žeravosť */
+  --temper:#7ea6c4;    /* popúšťaná (modrá) oceľ */
+  --good:#5fbf7f; --bad:#ff5a4f;
+  --heat:linear-gradient(90deg,var(--ember),var(--melt) 45%,var(--spark));
+  --f-display:"Big Shoulders Display","Impact","Arial Narrow",sans-serif;
+  --f-body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --wrap:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--slag);color:var(--steel);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:48px 48px}
+a{color:var(--spark)}
+:focus-visible{outline:2px solid var(--spark);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1;margin:0;letter-spacing:.01em}
+h2{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:900;text-transform:uppercase}
+h3{font-size:1.6rem;font-weight:800;text-transform:uppercase}
+p{margin:0}
+.lead{font-size:1.15rem;color:var(--steel);max-width:62ch}
+.muted{color:var(--ash)}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--melt);display:flex;gap:.75rem;align-items:center}
+.eyebrow::after{content:"";height:1px;flex:1;max-width:120px;background:var(--rivet)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(17,18,20,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--rivet)}
+.nav .wrap{display:flex;align-items:center;gap:1.25rem;height:60px}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--steel);font-family:var(--f-display);font-weight:900;font-size:1.35rem;letter-spacing:.04em;flex-shrink:0}
+.brand svg{width:30px;height:30px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1.1rem;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav ul::-webkit-scrollbar{display:none}
+.nav a.l{color:var(--ash);text-decoration:none;font-size:.85rem;white-space:nowrap;font-weight:500}
+.nav a.l:hover{color:var(--steel)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rivet)}
+.hero::before{content:"";position:absolute;inset:auto -10% -55% -10%;height:90%;background:radial-gradient(ellipse at 50% 100%,rgba(255,107,26,.35),rgba(196,50,27,.12) 40%,transparent 70%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.25fr .75fr;gap:2rem;align-items:center;padding-block:clamp(48px,8vw,96px)}
+.hero h1{font-size:clamp(3.6rem,13vw,9.5rem);font-weight:900;text-transform:uppercase;line-height:.85;letter-spacing:-.01em}
+.hero h1 .hot{background:var(--heat);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .tag{font-family:var(--f-mono);color:var(--ash);margin-top:1.25rem;font-size:.95rem}
+.hero .lead{margin-top:1.5rem}
+.hero-logo{justify-self:center;width:min(320px,70vw);filter:drop-shadow(0 0 40px rgba(255,107,26,.25))}
+.seam{stroke-dasharray:120;stroke-dashoffset:120;animation:pour 1.6s .3s ease-out forwards}
+@keyframes pour{to{stroke-dashoffset:0}}
+.games{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.75rem}
+.chip{font-family:var(--f-mono);font-size:.78rem;border:1px solid var(--rivet);padding:.35rem .7rem;border-radius:2px;background:var(--plate);color:var(--steel);letter-spacing:.04em}
+.chip.hot{border-color:var(--melt);color:var(--spark)}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rivet)}
+.fact{padding:1.25rem clamp(16px,2vw,24px);border-right:1px solid var(--rivet)}
+.fact:last-child{border-right:0}
+.fact b{display:block;font-family:var(--f-display);font-size:2.4rem;font-weight:800;line-height:1;color:var(--steel)}
+.fact span{font-size:.82rem;color:var(--ash)}
+
+/* sections */
+section.s{padding-block:clamp(64px,9vw,112px);border-bottom:1px solid var(--rivet)}
+.s-head{display:grid;gap:1rem;margin-bottom:2.5rem}
+.grid{display:grid;gap:1.25rem}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.panel{background:var(--plate);border:1px solid var(--rivet);padding:1.5rem;position:relative;min-width:0}
+.panel.rivets::before,.panel.rivets::after{content:"";position:absolute;top:10px;width:5px;height:5px;border-radius:50%;background:var(--rivet)}
+.panel.rivets::before{left:10px}.panel.rivets::after{right:10px}
+.panel h3{margin-bottom:.6rem}
+.panel p+p{margin-top:.6rem}
+ul.clean{list-style:none;padding:0;margin:.5rem 0 0;display:grid;gap:.45rem}
+ul.clean li{padding-left:1.1rem;position:relative}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:2px;background:var(--melt)}
+
+/* name */
+.name-main{display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center;background:var(--plate);border:1px solid var(--melt);padding:2rem;box-shadow:0 0 0 1px rgba(255,107,26,.15),0 20px 60px -30px rgba(255,107,26,.5)}
+.name-main svg{width:120px}
+.name-main .nm{font-family:var(--f-display);font-weight:900;font-size:clamp(2.4rem,7vw,4.5rem);line-height:.9;text-transform:uppercase}
+.badge{display:inline-block;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .55rem;background:var(--melt);color:#1a0b02;font-weight:600}
+.alt .nm{font-family:var(--f-display);font-weight:800;font-size:2rem;text-transform:uppercase;line-height:1}
+.alt .why{margin-top:.5rem;font-size:.95rem}
+.alt .verdict{margin-top:.8rem;font-family:var(--f-mono);font-size:.78rem;color:var(--ash)}
+
+/* identity */
+.swatches{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.75rem}
+.sw{border:1px solid var(--rivet);background:var(--plate)}
+.sw i{display:block;height:84px}
+.sw div{padding:.6rem .7rem;font-size:.8rem}
+.sw b{display:block;font-weight:600}
+.sw code{font-family:var(--f-mono);color:var(--ash);font-size:.75rem}
+.type-row{display:grid;grid-template-columns:140px 1fr;gap:1rem;align-items:baseline;padding-block:1rem;border-bottom:1px solid var(--rivet)}
+.type-row:last-child{border-bottom:0}
+.type-row small{font-family:var(--f-mono);color:var(--ash);font-size:.75rem}
+.kit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:end}
+.kit figure{margin:0;text-align:center}
+.kit figcaption{font-family:var(--f-mono);font-size:.75rem;color:var(--ash);margin-top:.5rem}
+.kit svg{width:100%;max-width:230px}
+
+/* divisions */
+.div-card{display:flex;flex-direction:column;gap:.9rem}
+.div-card .gm{font-family:var(--f-display);font-size:2.6rem;font-weight:900;line-height:.9;text-transform:uppercase}
+.div-card .code{font-family:var(--f-mono);font-size:.72rem;color:var(--melt);letter-spacing:.12em}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;font-size:.88rem}
+.kv dt{color:var(--ash)}
+.kv dd{margin:0;text-align:right}
+.bar-pri{height:4px;background:var(--rivet);position:relative}
+.bar-pri i{position:absolute;inset:0 auto 0 0;background:var(--heat)}
+
+/* org chart */
+.org{display:grid;gap:1.25rem}
+.org .lvl{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;position:relative}
+.node{background:var(--plate);border:1px solid var(--rivet);padding:.85rem 1rem;min-width:0;flex:1 1 200px;max-width:280px}
+.node.top{border-color:var(--melt);max-width:360px}
+.node b{display:block;font-family:var(--f-display);font-size:1.25rem;text-transform:uppercase;font-weight:800}
+.node span{font-size:.82rem;color:var(--ash);display:block}
+.node .who{font-family:var(--f-mono);font-size:.72rem;color:var(--temper);margin-top:.35rem}
+.org .conn{height:22px;width:1px;background:var(--rivet);margin:0 auto}
+
+/* economics */
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+.tab{font:600 .9rem var(--f-body);background:var(--plate);color:var(--steel);border:1px solid var(--rivet);padding:.65rem 1rem;cursor:pointer;text-align:left}
+.tab small{display:block;font-weight:400;color:var(--ash);font-size:.75rem}
+.tab[aria-pressed="true"]{border-color:var(--melt);background:linear-gradient(180deg,rgba(255,107,26,.14),transparent)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rivet);border:1px solid var(--rivet);margin-bottom:1.25rem}
+.kpi{background:var(--plate);padding:1.1rem 1.2rem;min-width:0}
+.kpi span{font-size:.78rem;color:var(--ash);display:block}
+.kpi b{font-family:var(--f-mono);font-size:clamp(1.15rem,2.4vw,1.6rem);font-weight:600;display:block;margin-top:.25rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kpi em{font-style:normal;font-size:.75rem;font-family:var(--f-mono)}
+.pos{color:var(--good)}.neg{color:var(--bad)}
+.calc{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:1.25rem;align-items:start}
+details.grp{background:var(--plate);border:1px solid var(--rivet)}
+details.grp+details.grp{border-top:0}
+details.grp summary{cursor:pointer;padding:.85rem 1.1rem;font-weight:600;display:flex;justify-content:space-between;gap:1rem;list-style:none}
+details.grp summary::-webkit-details-marker{display:none}
+details.grp summary::before{content:"+";font-family:var(--f-mono);color:var(--melt);margin-right:.6rem}
+details.grp[open] summary::before{content:"–"}
+details.grp summary .t{flex:1}
+details.grp summary .v{font-family:var(--f-mono);color:var(--ash);font-weight:400;font-size:.85rem}
+.fields{padding:.25rem 1.1rem 1.1rem;display:grid;gap:.55rem}
+.f{display:grid;grid-template-columns:1fr 130px;gap:.75rem;align-items:center;font-size:.86rem}
+.f label{color:var(--ash)}
+.f input[type=number]{width:100%;background:var(--slag);border:1px solid var(--rivet);color:var(--steel);font:500 .86rem var(--f-mono);padding:.4rem .5rem;text-align:right}
+.f input[type=number]:focus{border-color:var(--melt);outline:none}
+.f input[type=checkbox]{justify-self:end;accent-color:var(--melt);width:18px;height:18px}
+.chart{background:var(--plate);border:1px solid var(--rivet);padding:1.25rem;position:relative;min-width:0}
+.chart h4{margin:0 0 .2rem;font:600 .95rem var(--f-body)}
+.chart .sub{font-size:.8rem;color:var(--ash);margin-bottom:1rem}
+.chart+.chart{margin-top:1.25rem}
+.hbar{display:grid;grid-template-columns:110px 1fr 110px;gap:.75rem;align-items:center;font-size:.85rem;padding:.3rem 0}
+.hbar .track{height:14px;background:var(--slag);position:relative}
+.hbar .fill{position:absolute;inset:0 auto 0 0;background:var(--melt);border-radius:0 3px 3px 0;transition:width .35s}
+.hbar.rev .fill{background:var(--temper)}
+.hbar .val{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.hbar:hover .fill{filter:brightness(1.2)}
+#cash{width:100%;height:auto;display:block;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--slag);border:1px solid var(--rivet);padding:.45rem .6rem;font:500 .78rem var(--f-mono);white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .1s}
+.note{font-size:.82rem;color:var(--ash);margin-top:1rem;border-left:2px solid var(--rivet);padding-left:.8rem}
+.warn{display:inline-flex;gap:.4rem;align-items:center;font:600 .75rem var(--f-mono);padding:.25rem .5rem;border:1px solid currentColor}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rivet);background:var(--plate)}
+table{border-collapse:collapse;width:100%;font-size:.9rem;min-width:560px}
+th,td{padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--rivet);vertical-align:top}
+th{font:600 .72rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ash);background:var(--plate-2)}
+td.r,th.r{text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+tr.us td{background:rgba(255,107,26,.07)}
+tr.us td:first-child{box-shadow:inset 3px 0 0 var(--melt)}
+tfoot td{font-weight:700;background:var(--plate-2)}
+
+/* tournament */
+.poster{background:radial-gradient(ellipse at 70% 120%,rgba(255,107,26,.45),transparent 60%),var(--plate);border:1px solid var(--rivet);padding:2rem;display:grid;gap:1rem;align-content:end;min-height:380px;position:relative;overflow:hidden}
+.poster .big{font-family:var(--f-display);font-weight:900;font-size:clamp(3rem,9vw,6rem);line-height:.82;text-transform:uppercase}
+.poster .big span{display:block;-webkit-text-stroke:1.5px var(--steel);color:transparent}
+.poster .meta{font-family:var(--f-mono);font-size:.82rem;color:var(--steel);display:flex;flex-wrap:wrap;gap:.4rem 1.2rem}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:2px solid var(--rivet);position:relative}
+.tl .st{padding:1.5rem 1.25rem 0 0;position:relative}
+.tl .st::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;background:var(--slag);border:2px solid var(--melt);transform:rotate(45deg)}
+.tl .st.now::before{background:var(--melt);box-shadow:0 0 14px var(--melt)}
+.tl .q{font-family:var(--f-mono);font-size:.75rem;color:var(--melt);letter-spacing:.1em}
+.tl h3{font-size:1.3rem;margin:.4rem 0 .5rem}
+
+/* slides outline */
+.slides{counter-reset:sl;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.75rem}
+.sl{aspect-ratio:16/10;background:var(--plate);border:1px solid var(--rivet);padding:.8rem;display:flex;flex-direction:column;justify-content:space-between;max-width:100%;min-width:0}
+.sl::before{counter-increment:sl;content:counter(sl,decimal-leading-zero);font-family:var(--f-mono);font-size:.72rem;color:var(--melt)}
+.sl b{font-family:var(--f-display);font-size:1.15rem;text-transform:uppercase;line-height:1}
+.sl small{font-size:.72rem;color:var(--ash);line-height:1.35}
+
+footer{padding-block:3rem;color:var(--ash);font-size:.85rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+
+@media (max-width:980px){
+  .hero .wrap{grid-template-columns:1fr}
+  .hero-logo{grid-row:1;width:min(200px,50vw);justify-self:start}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .calc{grid-template-columns:1fr}
+  .slides{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tl{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2rem}
+  .swatches{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .g2,.g3,.g4,.kit{grid-template-columns:1fr}
+  .facts,.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fact:nth-child(2){border-right:0}
+  .fact:nth-child(-n+2){border-bottom:1px solid var(--rivet)}
+  .name-main{grid-template-columns:1fr}
+  .name-main svg{width:80px}
+  .type-row{grid-template-columns:1fr;gap:.25rem}
+  .hbar{grid-template-columns:84px 1fr 92px;font-size:.78rem}
+  .f{grid-template-columns:1fr 110px}
+  .tl{grid-template-columns:1fr}
+  .swatches{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3e7eb"/><stop offset="1" stop-color="#8d949c"/></linearGradient>
+    <linearGradient id="gR" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c737b"/><stop offset="1" stop-color="#3a3f45"/></linearGradient>
+    <linearGradient id="gHeat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc857"/><stop offset=".5" stop-color="#ff6b1a"/><stop offset="1" stop-color="#c4321b"/></linearGradient>
+    <symbol id="logo" viewBox="0 0 100 100">
+      <path fill="url(#gL)" d="M50 24 Q44 12 32 10 Q16 8 8 24 Q2 38 12 50 L50 90 L52 78 L47 66 L54 52 L46 40 Z"/>
+      <path fill="url(#gR)" d="M50 24 L46 40 L54 52 L47 66 L52 78 L50 90 L88 50 Q98 38 92 24 Q84 8 68 10 Q56 12 50 24 Z"/>
+      <path d="M20 30 L30 22 M24 40 L36 30" stroke="#ffffff" stroke-opacity=".35" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <polyline class="seam" points="50,24 46,40 54,52 47,66 52,78 50,90" fill="none" stroke="url(#gHeat)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Sekcie">
+  <div class="wrap">
+    <a class="brand" href="#top"><svg aria-hidden="true"><use href="#logo"/></svg>STEELHEART</a>
+    <ul>
+      <li><a class="l" href="#nazov">Názov</a></li>
+      <li><a class="l" href="#identita">Identita</a></li>
+      <li><a class="l" href="#divizie">Divízie</a></li>
+      <li><a class="l" href="#struktura">Štruktúra</a></li>
+      <li><a class="l" href="#ekonomika">Ekonomika</a></li>
+      <li><a class="l" href="#hraci">Hráči</a></li>
+      <li><a class="l" href="#propagacia">Propagácia</a></li>
+      <li><a class="l" href="#marketing">Marketing</a></li>
+      <li><a class="l" href="#turnaj">Turnaj</a></li>
+      <li><a class="l" href="#inovacia">Inovácia</a></li>
+      <li><a class="l" href="#plan">Plán</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Esportová organizácia · Ostrava · est. 2026</p>
+      <h1 style="margin-top:1rem">Steel<span class="hot">heart</span><br>Esports</h1>
+      <p class="tag">// Kalení v Ostrave. Forged in Ostrava.</p>
+      <p class="lead">Ostrava bola „oceľovým srdcom republiky". Pece vyhasli, ale mesto má stále v krvi tvrdú prácu, partiu a hrdosť. Steelheart prenáša túto povahu do esportu. Je to organizácia so štyrmi divíziami, vlastným turnajom a talentovou akadémiou postavenou na univerzitnom EsportLABe.</p>
+      <div class="games">
+        <span class="chip hot">CS2</span><span class="chip hot">League of Legends</span><span class="chip hot">Valorant</span><span class="chip hot">Dota 2</span>
+      </div>
+    </div>
+    <svg class="hero-logo" viewBox="0 0 100 100" role="img" aria-label="Logo Steelheart: oceľové srdce s roztaveným švom"><use href="#logo"/></svg>
+  </div>
+  <div class="wrap" style="padding-inline:0">
+    <div class="facts">
+      <div class="fact"><b>4</b><span>herné divízie (zadanie: min. 3)</span></div>
+      <div class="fact"><b>20</b><span>hráčov v základných zostavách</span></div>
+      <div class="fact"><b id="hf-y1">–</b><span>náklady 1. roka (scenár Garáž)</span></div>
+      <div class="fact"><b>1</b><span>vlastný LAN turnaj ročne: Forge Cup</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- NÁZOV -->
+<section class="s" id="nazov">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">01 · Názov, identita, značka</p>
+      <h2>Prečo Steelheart</h2>
+      <p class="lead">Dobrý esportový názov musí fungovať v angličtine pre medzinárodnú scénu a zároveň niesť príbeh, ktorý má len jedno mesto. Hodnotili sme ho podľa piatich kritérií: zapamätateľnosť, výslovnosť v CZ/SK aj EN, lokálny príbeh, voľné domény a sociálne siete a potenciál na merch.</p>
+    </div>
+    <div class="name-main">
+      <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#logo"/></svg>
+      <div style="min-width:0">
+        <span class="badge">Odporúčaný názov</span>
+        <div class="nm" style="margin-top:.6rem">Steelheart Esports</div>
+        <p style="margin-top:.75rem;max-width:62ch">Priamy odkaz na prezývku Ostravy <em>„ocelové srdce republiky"</em>. Anglicky znie ako fantasy titul, takže zahraniční fanúšikovia ho pochopia bez vysvetlenia. Doma má okamžite príbeh: haldy, Vítkovice, Dolní oblast. Skratka do zápasov je <span class="mono" style="color:var(--spark)">SHE</span>, hashtag <span class="mono" style="color:var(--spark)">#ForgedInOstrava</span>.</p>
+        <p class="mono muted" style="font-size:.78rem;margin-top:.75rem">Kontrola pred schválením: steelheart.gg / .cz · @steelheartgg · rešerš ochrannej známky ÚPV/EUIPO trieda 41</p>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:1.25rem">
+      <div class="panel alt">
+        <div class="nm">Furnace</div>
+        <p class="why">Vysoká pec je najsilnejší symbol Dolnej oblasti Vítkovice. Názov je krátky a agresívny.</p>
+        <p class="verdict">Záloha · v esporte sa „Furnace" už objavuje často</p>
+      </div>
+      <div class="panel alt">
+        <div class="nm">Halda</div>
+        <p class="why">Ostravské haldy, napr. Ema. Lokálne veľmi silné, ale v angličtine nič neznamená.</p>
+        <p class="verdict">Použijeme ako názov fan zóny na turnaji</p>
+      </div>
+      <div class="panel alt">
+        <div class="nm">Šichta</div>
+        <p class="why">Banícky výraz pre zmenu. Je to skvelé slovo pre komunitu, ale ťažké pre zahraničných komentátorov.</p>
+        <p class="verdict">Použijeme ako názov fan členstva (viď Inovácia)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IDENTITA -->
+<section class="s" id="identita">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">01b · Vizuálna identita</p>
+      <h2>Oceľ, šev, žeravosť</h2>
+      <p class="lead">Logo tvorí srdce z dvoch oceľových plátov zvarených roztaveným švom. Šev je cikcak, ako trhlina v kove aj ako blesk. Ľavá svetlá polovica predstavuje hráčov, pravá tmavá polovica fanúšikov. Spája ich žeravá oceľ.</p>
+    </div>
+    <div class="grid g2">
+      <div class="panel rivets">
+        <h3>Farby</h3>
+        <div class="swatches" style="margin-top:1rem">
+          <div class="sw"><i style="background:#111214"></i><div><b>Troska</b><code>#111214</code></div></div>
+          <div class="sw"><i style="background:#d6dadf"></i><div><b>Oceľ</b><code>#D6DADF</code></div></div>
+          <div class="sw"><i style="background:#ff6b1a"></i><div><b>Tavba</b><code>#FF6B1A</code></div></div>
+          <div class="sw"><i style="background:#ffc857"></i><div><b>Iskra</b><code>#FFC857</code></div></div>
+          <div class="sw"><i style="background:#7ea6c4"></i><div><b>Popúšťaná</b><code>#7EA6C4</code></div></div>
+        </div>
+        <p class="note">Žeravý gradient (tmavočervená → oranžová → žltá) sa používa len na jednom mieste na ploche, napríklad šev v logu, highlight skóre alebo pruh na drese. Inak platí oceľ na troske.</p>
+        <h3 style="margin-top:1.75rem">Písmo</h3>
+        <div style="margin-top:.5rem">
+          <div class="type-row"><small>Display</small><span style="font-family:var(--f-display);font-weight:900;font-size:2.2rem;text-transform:uppercase;line-height:1">Big Shoulders</span></div>
+          <div class="type-row"><small>Text</small><span>Archivo: čitateľné na streame aj v tlači</span></div>
+          <div class="type-row"><small>Dáta</small><span class="mono">JetBrains Mono · 16 : 14 · 1 250 Kč</span></div>
+        </div>
+      </div>
+      <div class="panel rivets">
+        <h3>Dresy 2027</h3>
+        <div class="kit" style="margin-top:1rem">
+          <figure>
+            <svg viewBox="0 0 120 124" role="img" aria-label="Domáci dres: tmavý so žeravým diagonálnym pruhom">
+              <defs><clipPath id="shirt1"><path d="M30 10 L45 5 Q60 16 75 5 L90 10 L116 32 L102 50 L90 42 L90 118 L30 118 L30 42 L18 50 L4 32 Z"/></clipPath></defs>
+              <g clip-path="url(#shirt1)">
+                <rect width="120" height="124" fill="#1d1f23"/>
+                <polygon points="0,96 120,40 120,58 0,114" fill="url(#gHeat)"/>
+                <polygon points="0,88 120,32 120,35 0,91" fill="#d6dadf" opacity=".5"/>
+                <rect x="0" y="0" width="30" height="124" fill="#000" opacity=".25"/>
+                <rect x="90" y="0" width="30" height="124" fill="#000" opacity=".25"/>
+              </g>
+              <path d="M45 5 Q60 16 75 5" fill="none" stroke="#ff6b1a" stroke-width="2.5"/>
+              <use href="#logo" x="64" y="22" width="16" height="16"/>
+              <text x="43" y="33" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="7" fill="#8d939b">PARTNER</text>
+            </svg>
+            <figcaption>Domáci · „Tavba"</figcaption>
+          </figure>
+          <figure>
+            <svg viewBox="0 0 120 124" role="img" aria-label="Vonkajší dres: svetlý oceľový s tmavým švom">
+              <defs><clipPath id="shirt2"><path d="M30 10 L45 5 Q60 16 75 5 L90 10 L116 32 L102 50 L90 42 L90 118 L30 118 L30 42 L18 50 L4 32 Z"/></clipPath></defs>
+              <g clip-path="url(#shirt2)">
+                <rect width="120" height="124" fill="#d6dadf"/>
+                <rect x="60" width="60" height="124" fill="#b6bcc3"/>
+                <polyline points="60,5 55,40 66,62 56,86 63,104 60,124" fill="none" stroke="url(#gHeat)" stroke-width="5"/>
+              </g>
+              <path d="M45 5 Q60 16 75 5" fill="none" stroke="#111214" stroke-width="2.5"/>
+              <use href="#logo" x="68" y="22" width="16" height="16"/>
+              <text x="36" y="33" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="7" fill="#33373d">PARTNER</text>
+            </svg>
+            <figcaption>Vonkajší · „Studená oceľ"</figcaption>
+          </figure>
+        </div>
+        <p class="note">Na hrudi je jedna plocha pre hlavného partnera, na rukáve partner divízie. Odhad výroby: sublimačná tlač 1 100 – 1 400 Kč/ks pri 30+ kusoch. Fanúšikovská verzia sa predáva za 1 490 Kč.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVÍZIE -->
+<section class="s" id="divizie">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">02 · Herné sekcie</p>
+      <h2>Štyri divízie, jedna pec</h2>
+      <p class="lead">Každá divízia má 5 hráčov, náhradníka a trénera. Nezačíname so všetkými rovnako silno. Peniaze a pozornosť rozdeľujeme podľa toho, kde je v CZ/SK najväčšie publikum a najdostupnejšia súťažná cesta.</p>
+    </div>
+    <div class="grid g4">
+      <article class="panel div-card">
+        <span class="code">SHE.CS · priorita 1</span>
+        <div class="gm">CS2</div>
+        <p class="muted" style="font-size:.9rem">Najväčšia scéna v ČR a na SK, tradícia LAN turnajov aj sponzorov. Vlajková loď organizácie.</p>
+        <div class="bar-pri" aria-label="Priorita 100 %"><i style="width:100%"></i></div>
+        <dl class="kv"><dt>Zostava</dt><dd>5 + 1 + tréner</dd><dt>Cesta</dt><dd>FACEIT → CZ/SK ligy → LAN</dd><dt>Cieľ 2027</dt><dd>top 8 CZ/SK</dd></dl>
+      </article>
+      <article class="panel div-card">
+        <span class="code">SHE.LOL · priorita 2</span>
+        <div class="gm">League of Legends</div>
+        <p class="muted" style="font-size:.9rem">Jasná ligová štruktúra s národnou ERL ligou CZ/SK a silnou študentskou základňou.</p>
+        <div class="bar-pri" aria-label="Priorita 80 %"><i style="width:80%"></i></div>
+        <dl class="kv"><dt>Zostava</dt><dd>5 + 1 + tréner</dd><dt>Cesta</dt><dd>univ. ligy → kvalifikácia ERL</dd><dt>Cieľ 2027</dt><dd>postup do ERL kvalifikácie</dd></dl>
+      </article>
+      <article class="panel div-card">
+        <span class="code">SHE.VAL · priorita 3</span>
+        <div class="gm">Valorant</div>
+        <p class="muted" style="font-size:.9rem">Najmladšie publikum a najlepší obsah na TikTok. Cieľ: mixed alebo ženská zostava do 2028.</p>
+        <div class="bar-pri" aria-label="Priorita 65 %"><i style="width:65%"></i></div>
+        <dl class="kv"><dt>Zostava</dt><dd>5 + 1 + tréner</dd><dt>Cesta</dt><dd>Premier → regionálne turnaje</dd><dt>Cieľ 2027</dt><dd>top 3 regionálny okruh</dd></dl>
+      </article>
+      <article class="panel div-card">
+        <span class="code">SHE.DOTA · priorita 4</span>
+        <div class="gm">Dota 2</div>
+        <p class="muted" style="font-size:.9rem">Malá, ale verná komunita a najvyššie prize pooly v histórii (TI 2017: 24,7 mil. USD). Prevažne online divízia.</p>
+        <div class="bar-pri" aria-label="Priorita 45 %"><i style="width:45%"></i></div>
+        <dl class="kv"><dt>Zostava</dt><dd>5 + 1 + tréner</dd><dt>Cesta</dt><dd>online cupy EU → open kvalifikácie</dd><dt>Cieľ 2027</dt><dd>top 16 EU open kvaly</dd></dl>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ŠTRUKTÚRA -->
+<section class="s" id="struktura">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">02b · Organizačná štruktúra</p>
+      <h2>Kto drží kladivo</h2>
+      <p class="lead">Pozície vychádzajú zo zadania (marketér, hráč, tréner, influencer, organizátor, streamer, manažér, dizajnér, technik). V prvom roku zastávajú viaceré roly zakladatelia. Modrým písmom je pri každej pozícii uvedená forma úväzku.</p>
+    </div>
+    <div class="org">
+      <div class="lvl"><div class="node top"><b>CEO / zakladateľ</b><span>stratégia, partneri, financie</span><span class="who">zakladateľ · bez mzdy v roku 1</span></div></div>
+      <div class="conn"></div>
+      <div class="lvl">
+        <div class="node"><b>Head of Esports</b><span>manažér divízií, scrimy, kontrakty hráčov</span><span class="who">zakladateľ → DPP</span></div>
+        <div class="node"><b>Marketing lead</b><span>značka, sociálne siete, influenceri</span><span class="who">zakladateľ → DPP</span></div>
+        <div class="node"><b>Events & Tech</b><span>Forge Cup, LAN, technika, stream</span><span class="who">organizátor + technik</span></div>
+        <div class="node"><b>Finance & Partners</b><span>rozpočet, sponzori, granty</span><span class="who">zakladateľ + externé účtovníctvo</span></div>
+      </div>
+      <div class="conn"></div>
+      <div class="lvl">
+        <div class="node"><b>4 × divízia</b><span>tréner, kapitán, 5 + 1 hráčov</span><span class="who">hráčska zmluva / IČO</span></div>
+        <div class="node"><b>Content tím</b><span>streamer, strihač, fotograf</span><span class="who">DPP / freelance</span></div>
+        <div class="node"><b>Dizajnér</b><span>grafika zápasov, merch, dresy</span><span class="who">freelance</span></div>
+        <div class="node"><b>Ambasádori</b><span>influenceri a streameri z regiónu</span><span class="who">rev-share + fix</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EKONOMIKA -->
+<section class="s" id="ekonomika">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">05 · Financie</p>
+      <h2>Koľko stojí rozpáliť pec</h2>
+      <p class="lead">Interaktívny model nákladov a príjmov. Vyberte scenár a ľubovoľné číslo vľavo prepíšte. Ukazovatele, grafy aj 24-mesačný cash-flow sa prepočítajú okamžite. Všetky sumy sú v Kč bez DPH a ide o orientačné odhady pre CZ/SK trh v roku 2026.</p>
+    </div>
+    <div class="tabs" role="group" aria-label="Scenár">
+      <button class="tab" data-sc="garaz" aria-pressed="true">Garáž<small>rok 1 · amatéri, štart</small></button>
+      <button class="tab" data-sc="semi" aria-pressed="false">Semi-pro<small>rok 2 · štipendiá</small></button>
+      <button class="tab" data-sc="pro" aria-pressed="false">Pro<small>rok 3+ · platy, investor</small></button>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span>Jednorazové náklady na založenie</span><b id="k-one">–</b></div>
+      <div class="kpi"><span>Mesačné náklady v plnom behu</span><b id="k-mon">–</b></div>
+      <div class="kpi"><span>Ročné príjmy (plný beh)</span><b id="k-rev">–</b></div>
+      <div class="kpi"><span>Ročný výsledok prevádzky</span><b id="k-res">–</b><em id="k-res-n"></em></div>
+    </div>
+    <div class="calc">
+      <div id="form"></div>
+      <div>
+        <div class="chart">
+          <h4>Kam idú peniaze každý mesiac</h4>
+          <p class="sub">Mesačné náklady podľa kategórie, Kč</p>
+          <div id="costbars"></div>
+        </div>
+        <div class="chart">
+          <h4>Odkiaľ prichádzajú</h4>
+          <p class="sub">Ročné príjmy podľa zdroja, Kč</p>
+          <div id="revbars"></div>
+        </div>
+        <div class="chart" id="cashbox">
+          <h4>Hotovosť na účte, 24 mesiacov</h4>
+          <p class="sub" id="cash-sub">Počiatočný kapitál mínus jednorazové náklady, potom mesačné saldo</p>
+          <svg id="cash" viewBox="0 0 560 240" role="img" aria-label="Graf vývoja hotovosti"></svg>
+          <div class="tip" id="tip"></div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Predpoklady modelu: náhradník dostáva 50 % štipendia. Z prize money si organizácia ponecháva 10 %, hráči 80 % a tréner 10 %. V roku 1 sponzori platia od 3. mesiaca. Merch sa predáva najmä pri launchi a pred Vianocami, grant prichádza v 6. mesiaci a Forge Cup sa koná v 9. mesiaci. Rok 2 počíta s rastom príjmov o 30 % a nákladov o 8 %. Rezerva na jednorazové náklady je 10 %.</p>
+  </div>
+</section>
+
+<!-- HRÁČI -->
+<section class="s" id="hraci">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">05b · Odmeny hráčom</p>
+      <h2>Koľko sme ochotní platiť</h2>
+      <p class="lead">Hráčom neplatíme od prvého dňa, ale platba rastie s výsledkami a príjmami. Do momentu, keď divíziu zaplatí sponzor, dostávajú hráči vybavenie, bootcampy, viditeľnosť a 80 % prize money.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Úroveň</th><th>Bežne na trhu</th><th class="r">Mesačne / hráč</th><th>Čo dostáva hráč od nás</th></tr></thead>
+        <tbody>
+          <tr class="us"><td><b>Garáž</b> · rok 1</td><td>amatéri, akadémie, univerzitné tímy</td><td class="r">0 Kč</td><td>dres, periférie od partnera, 1 bootcamp ročne, 80 % výhier, tréner</td></tr>
+          <tr class="us"><td><b>Semi-pro</b> · rok 2</td><td>top CZ/SK tímy mimo tier-2</td><td class="r">3 000 – 6 000 Kč</td><td>štipendium podľa divízie (CS2 najviac), 2 bootcampy, cestovné na LAN</td></tr>
+          <tr class="us"><td><b>Pro</b> · rok 3+</td><td>tier-2 EU, top CZ/SK</td><td class="r">18 000 – 30 000 Kč</td><td>zmluva s buy-out klauzulou, výkonnostné bonusy, psychológ, fyzio</td></tr>
+          <tr><td>Tier-2 Európa</td><td>stredné EU organizácie</td><td class="r">1 500 – 4 000 €</td><td class="muted">referenčná úroveň, nie náš cieľ do roku 2029</td></tr>
+          <tr><td>Tier-1 svet</td><td>top 20 organizácií</td><td class="r">10 000 € +</td><td class="muted">referenčná úroveň</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid g3" style="margin-top:1.25rem">
+      <div class="panel"><h3>Štipendium podľa divízie</h3><p>V semi-pro fáze nedostáva každá divízia rovnako. CS2 dostane 6 000 Kč, LoL 5 000 Kč, Valorant 4 000 Kč a Dota 2 3 000 Kč. Suma kopíruje veľkosť publika, a teda aj hodnotu pre sponzora.</p></div>
+      <div class="panel"><h3>Bonusy namiesto fixu</h3><p>Bonus 2 000 Kč za každé top-4 umiestnenie na LAN. Hráč dostane 10 % z predaja merchu so svojím menom a 20 % z príjmu streamu pod značkou SHE.</p></div>
+      <div class="panel"><h3>Zmluva</h3><p>Hráč fakturuje na IČO alebo pracuje na DPP. Zmluva zakotvuje image rights, povinnosť streamovať 8 h mesačne, kódex správania a buy-out pri prestupe. Odstupné rozdelíme 50/50 medzi organizáciu a hráča.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPAGÁCIA -->
+<section class="s" id="propagacia">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">03b · Ľudia, ktorí nás promujú</p>
+      <h2>Rozpočet na influencerov</h2>
+      <p class="lead">Najlacnejší dosah majú malí regionálni tvorcovia. Platíme radšej desať nano tvorcov z Moravskoslezského kraja než jednu celebritu. Kde to ide, platíme podielom z predaja namiesto fixnej sumy.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Typ tvorcu</th><th>Sledovatelia</th><th class="r">Cena za stream / video</th><th>Ako ho využijeme</th></tr></thead>
+        <tbody>
+          <tr><td>Nano</td><td>do 10 tis.</td><td class="r">500 – 2 500 Kč</td><td>watch party zápasov, unboxing dresu, barter (dres + periférie)</td></tr>
+          <tr class="us"><td>Mikro</td><td>10 – 50 tis.</td><td class="r">2 500 – 10 000 Kč</td><td><b>náš základ:</b> 2 – 8 spoluprác mesačne, kód na merch s 10 % províziou</td></tr>
+          <tr class="us"><td>Ambasádor</td><td>20 – 100 tis.</td><td class="r">5 000 – 40 000 Kč / mes</td><td>jeden tvár organizácie, co-stream všetkých zápasov, fix + 10 % z merchu</td></tr>
+          <tr><td>Stredný</td><td>50 – 200 tis.</td><td class="r">10 000 – 40 000 Kč</td><td>launch dresu a ohlásenie Forge Cupu, max. 2× ročne</td></tr>
+          <tr><td>Makro</td><td>200 tis. +</td><td class="r">40 000 – 150 000 Kč +</td><td class="muted">až v scenári Pro, ideálne zaplatené partnerom</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Rozpočet na propagáciu je v kalkulačke rozdelený na ambasádora, mikro spolupráce a platenú reklamu (Meta/TikTok). V scenári Garáž ide o 7 000 Kč mesačne, v Semi-pro o 28 000 Kč. Odhady cien vychádzajú z bežných sadzieb CZ/SK trhu a pred podpisom ich treba overiť priamo s tvorcami.</p>
+  </div>
+</section>
+
+<!-- MARKETING -->
+<section class="s" id="marketing">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">03 · Marketing a sociálne siete</p>
+      <h2>Launch „Odlievanie"</h2>
+      <p class="lead">Organizáciu odhalíme počas štyroch týždňov. Každý týždeň sa „odleje" jedna divízia s krátkym videom z Dolnej oblasti Vítkovice: hráč, vysoká pec, šev v logu sa rozžeraví. Finále je odhalenie dresu a ohlásenie Forge Cupu.</p>
+    </div>
+    <div class="grid g4">
+      <div class="panel"><h3>TikTok · Reels</h3><p class="muted">Klipy zo zápasov do 24 h, „clutch týždňa", trendy s maskotom. 5× týždenne.</p></div>
+      <div class="panel"><h3>Instagram</h3><p class="muted">Grafiky výsledkov, matchday plagáty, zákulisie. Denne počas zápasových týždňov.</p></div>
+      <div class="panel"><h3>Twitch · YouTube</h3><p class="muted">Seriál „Šichta" o zákulisí bootcampov, co-streamy ambasádora, VOD rozbory.</p></div>
+      <div class="panel"><h3>Discord · X</h3><p class="muted">Discord ako domov fanúšikov a členov Šichty. X pre CS2 a Valorant scénu a rýchle výsledky.</p></div>
+    </div>
+    <div class="tbl-wrap" style="margin-top:1.25rem">
+      <table>
+        <thead><tr><th>KPI</th><th class="r">Po 6 mesiacoch</th><th class="r">Po 12 mesiacoch</th><th>Prečo práve toto</th></tr></thead>
+        <tbody>
+          <tr><td>Sledovatelia spolu</td><td class="r">5 000</td><td class="r">15 000</td><td>hlavné číslo pri rokovaní so sponzorom</td></tr>
+          <tr><td>Discord členovia</td><td class="r">800</td><td class="r">2 000</td><td>aktívna komunita, cieľová skupina pre merch</td></tr>
+          <tr><td>Priem. diváci zápasu</td><td class="r">80</td><td class="r">250</td><td>vrátane co-streamov ambasádora</td></tr>
+          <tr><td>Predané dresy</td><td class="r">100</td><td class="r">250</td><td>v scenári Garáž pokrýva cca 25 % príjmov</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TURNAJ -->
+<section class="s" id="turnaj">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">04 · Turnaj</p>
+      <h2>Forge Cup Ostrava</h2>
+      <p class="lead">Vlastný LAN turnaj je najsilnejší marketingový nástroj aj zdroj príjmu. Online kvalifikácie sa hrajú v EsportLABe VŠB (EB317). Finálový víkend sa presunie do industriálnych priestorov Dolnej oblasti Vítkovice, kde sa hrá na mieste, ktoré dalo značke meno.</p>
+    </div>
+    <div class="grid g2">
+      <div class="poster">
+        <p class="eyebrow">Ročník I · september 2027</p>
+        <div class="big">Forge<span>Cup</span></div>
+        <div class="meta"><span>CS2 · Valorant LAN</span><span>LoL · Dota 2 online finále</span><span>32 tímov</span><span>prize pool 100 000 Kč</span></div>
+        <p class="mono muted" style="font-size:.78rem">Návrh miesta: GONG / Trojhalí Karolina · fan zóna „Halda"</p>
+      </div>
+      <div class="tbl-wrap">
+        <table style="min-width:0">
+          <thead><tr><th>Rozpočet (Semi-pro)</th><th class="r">Kč</th></tr></thead>
+          <tbody>
+            <tr><td>Prenájom priestoru, 2 dni</td><td class="r">−120 000</td></tr>
+            <tr><td>Produkcia, stream, technika</td><td class="r">−150 000</td></tr>
+            <tr><td>Prize pool</td><td class="r">−100 000</td></tr>
+            <tr><td>Prenájom 20 PC + monitorov</td><td class="r">−80 000</td></tr>
+            <tr><td>Marketing, personál, catering, ostatné</td><td class="r">−100 000</td></tr>
+            <tr><td>Vstupenky 1 200 × 290 Kč</td><td class="r pos">+348 000</td></tr>
+            <tr><td>Partneri turnaja</td><td class="r pos">+200 000</td></tr>
+            <tr><td>Štartovné 32 × 1 000 Kč</td><td class="r pos">+32 000</td></tr>
+            <tr><td>Stánky, merch, bar</td><td class="r pos">+50 000</td></tr>
+          </tbody>
+          <tfoot><tr><td>Čistý výsledok</td><td class="r pos">+80 000</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INOVÁCIA -->
+<section class="s" id="inovacia">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">06 · Inovácia</p>
+      <h2>Čo inde nemajú</h2>
+    </div>
+    <div class="grid g3">
+      <div class="panel rivets">
+        <p class="eyebrow">Fanúšikovia</p>
+        <h3 style="margin-top:.6rem">Šichta</h3>
+        <p>Fan členstvo s banícky pomenovanými úrovňami: <b>Učeň</b> (zadarmo), <b>Havíř</b> (99 Kč/mes) a <b>Predák</b> (249 Kč/mes). Body sa zbierajú za watch party, tipovanie zápasov a účasť na Forge Cupe. Predáci hlasujú o dizajne dresu a raz za sezónu si zahrajú scrim proti hráčom.</p>
+      </div>
+      <div class="panel rivets">
+        <p class="eyebrow">Výkon</p>
+        <h3 style="margin-top:.6rem">Forge Lab</h3>
+        <p>Spolupráca s VŠB a EsportLABom. Študenti informatiky stavajú nástroj na automatické tagovanie demo záznamov s pomocou AI a sledovanie formy hráčov. Tím získa analytiku na úrovni pro organizácií, univerzita výskumné dáta a študenti tému záverečnej práce.</p>
+      </div>
+      <div class="panel rivets">
+        <p class="eyebrow">Talent</p>
+        <h3 style="margin-top:.6rem">Akadémia MSK</h3>
+        <p>Stredoškolská liga Moravskoslezského kraja s tréningami v EsportLABe. Najlepší hráči postúpia do akademických zostáv Steelheartu. Projekt sa kvalifikuje na krajské granty na mládež a vzdelávanie a dlhodobo znižuje náklady na nábor hráčov.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLÁN -->
+<section class="s" id="plan">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">Roadmapa</p>
+      <h2>Od iskry po tavbu</h2>
+    </div>
+    <div class="tl">
+      <div class="st now"><p class="q">Q4 2026</p><h3>Iskra</h3><p class="muted">Založenie s.r.o., ochranná známka, identita, nábor hráčov cez otvorené tryouty v EsportLABe.</p></div>
+      <div class="st"><p class="q">Q1 – Q2 2027</p><h3>Odlievanie</h3><p class="muted">Launch kampaň, prvé ligy, prvý partner, spustenie Šichty a ambasádora.</p></div>
+      <div class="st"><p class="q">Q3 2027</p><h3>Forge Cup I</h3><p class="muted">Prvý LAN v Ostrave, druhá kolekcia merchu, rokovanie o hlavnom partnerovi pre rok 2.</p></div>
+      <div class="st"><p class="q">2028</p><h3>Semi-pro</h3><p class="muted">Štipendiá, Akadémia MSK, Forge Lab s VŠB, prvá zahraničná LAN.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PREZENTÁCIA -->
+<section class="s" id="prezentacia">
+  <div class="wrap">
+    <div class="s-head">
+      <p class="eyebrow">07 · Prezentácia</p>
+      <h2>10 slajdov, 30 minút</h2>
+      <p class="lead">Kostra obhajoby projektu. Každý slajd zodpovedá jednej požiadavke zo zadania, aby hodnotiaci videl, že sme pokryli všetko.</p>
+    </div>
+    <div class="slides">
+      <div class="sl"><b>Steelheart</b><small>príbeh názvu, logo · 2 min</small></div>
+      <div class="sl"><b>Tím</b><small>kto sme, aké pozície zastávame · 2 min</small></div>
+      <div class="sl"><b>Divízie</b><small>CS2, LoL, Valorant, Dota 2 a priority · 3 min</small></div>
+      <div class="sl"><b>Štruktúra</b><small>org chart, úväzky · 2 min</small></div>
+      <div class="sl"><b>Identita</b><small>farby, dresy, merch · 3 min</small></div>
+      <div class="sl"><b>Marketing</b><small>launch Odlievanie, siete, KPI · 4 min</small></div>
+      <div class="sl"><b>Forge Cup</b><small>formát, miesto, rozpočet · 4 min</small></div>
+      <div class="sl"><b>Financie</b><small>3 scenáre, živá kalkulačka · 5 min</small></div>
+      <div class="sl"><b>Inovácia</b><small>Šichta, Forge Lab, Akadémia · 3 min</small></div>
+      <div class="sl"><b>Roadmapa</b><small>ďalšie kroky + otázky · 2 min</small></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand" style="font-size:1.1rem"><svg aria-hidden="true" style="width:24px;height:24px"><use href="#logo"/></svg>STEELHEART ESPORTS</span>
+    <span>Študentský projekt · VŠB – Technická univerzita Ostrava · predmet History of Esport · 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const fmt = n => Math.round(n).toLocaleString('cs-CZ').replace(/ /g,' ') + ' Kč';
+  const fmtK = n => { const a=Math.abs(n); const s = a>=1e6 ? (a/1e6).toLocaleString('cs-CZ',{maximumFractionDigits:2})+' mil.' : Math.round(a/1000)+' tis.'; return (n<0?'−':'')+s; };
+
+  // Schéma vstupov: [id, popis, jednotka]
+  const SCHEMA = [
+    {g:'Hráči a tréneri', unit:'Kč / mes', f:[
+      ['st_cs','CS2: štipendium / hráč'],['st_lol','LoL: štipendium / hráč'],['st_val','Valorant: štipendium / hráč'],['st_dota','Dota 2: štipendium / hráč'],
+      ['co_cs','CS2: tréner'],['co_lol','LoL: tréner'],['co_val','Valorant: tréner'],['co_dota','Dota 2: tréner'],['subs','Platiť náhradníkov (50 %)','bool']]},
+    {g:'Štáb', unit:'Kč / mes', f:[['s_mgr','Manažér divízií'],['s_content','Content / strih'],['s_social','Sociálne siete'],['s_design','Dizajnér'],['s_acc','Účtovníctvo']]},
+    {g:'Propagácia', unit:'Kč / mes', f:[['p_amb','Ambasádor (fix)'],['p_micro_n','Mikro spolupráce / mes'],['p_micro_price','Cena jednej spolupráce'],['p_ads','Platená reklama']]},
+    {g:'Prevádzka', unit:'mix', f:[['o_soft','Softvér, hosting / mes'],['o_boot_n','Bootcampy / rok'],['o_boot_price','Cena bootcampu'],['o_travel','Cestovné na LAN / rok'],['o_fees','Štartovné líg / rok']]},
+    {g:'Založenie (jednorazovo)', unit:'Kč', f:[['t_found','Založenie s.r.o. (notár, OR)'],['t_legal','Právnik: zmluvy hráčov'],['t_tm','Ochranná známka ÚPV'],['t_brand','Branding, brandbook'],['t_web','Web, domény'],['t_jersey_n','Počet dresov (tím + štáb)'],['t_jersey_price','Cena dresu / ks'],['t_stream','Stream setup, kamera, PC'],['t_gear','Periférie pre hráčov']]},
+    {g:'Príjmy', unit:'Kč / rok', f:[['r_main','Hlavný partner / rok'],['r_part_n','Počet menších partnerov'],['r_part_avg','Priem. partner / rok'],['r_merch_n','Predané kusy merchu / rok'],['r_merch_margin','Marža / kus'],['r_prize','Prize money tímov / rok (org. 10 %)'],['r_grant','Granty / rok'],['r_creator','Stream, YouTube / mes'],['r_tourn','Forge Cup: čistý zisk'],['r_shichta','Šichta: platiaci členovia'] ]},
+    {g:'Kapitál', unit:'Kč', f:[['c_cap','Počiatočný kapitál (vklady, investor)']]}
+  ];
+
+  const P = {
+    garaz:{st_cs:0,st_lol:0,st_val:0,st_dota:0,co_cs:4000,co_lol:3000,co_val:3000,co_dota:2000,subs:false,
+      s_mgr:0,s_content:6000,s_social:0,s_design:0,s_acc:2500,
+      p_amb:0,p_micro_n:2,p_micro_price:2000,p_ads:3000,
+      o_soft:2800,o_boot_n:1,o_boot_price:25000,o_travel:30000,o_fees:15000,
+      t_found:12000,t_legal:10000,t_tm:5000,t_brand:0,t_web:3000,t_jersey_n:30,t_jersey_price:1100,t_stream:25000,t_gear:0,
+      r_main:120000,r_part_n:4,r_part_avg:25000,r_merch_n:250,r_merch_margin:450,r_prize:60000,r_grant:50000,r_creator:1500,r_tourn:20000,r_shichta:40,
+      c_cap:200000},
+    semi:{st_cs:6000,st_lol:5000,st_val:4000,st_dota:3000,co_cs:6000,co_lol:5000,co_val:5000,co_dota:4000,subs:false,
+      s_mgr:12000,s_content:8000,s_social:6000,s_design:4000,s_acc:3500,
+      p_amb:10000,p_micro_n:4,p_micro_price:2500,p_ads:8000,
+      o_soft:4000,o_boot_n:2,o_boot_price:30000,o_travel:60000,o_fees:30000,
+      t_found:12000,t_legal:30000,t_tm:5000,t_brand:20000,t_web:15000,t_jersey_n:35,t_jersey_price:1300,t_stream:60000,t_gear:72000,
+      r_main:800000,r_part_n:6,r_part_avg:100000,r_merch_n:600,r_merch_margin:500,r_prize:400000,r_grant:150000,r_creator:10000,r_tourn:80000,r_shichta:200,
+      c_cap:600000},
+    pro:{st_cs:30000,st_lol:25000,st_val:22000,st_dota:18000,co_cs:30000,co_lol:25000,co_val:22000,co_dota:18000,subs:true,
+      s_mgr:45000,s_content:30000,s_social:28000,s_design:25000,s_acc:8000,
+      p_amb:40000,p_micro_n:8,p_micro_price:5000,p_ads:40000,
+      o_soft:15000,o_boot_n:3,o_boot_price:120000,o_travel:300000,o_fees:100000,
+      t_found:12000,t_legal:80000,t_tm:25000,t_brand:80000,t_web:60000,t_jersey_n:60,t_jersey_price:1400,t_stream:200000,t_gear:150000,
+      r_main:5000000,r_part_n:8,r_part_avg:400000,r_merch_n:3000,r_merch_margin:550,r_prize:2000000,r_grant:300000,r_creator:60000,r_tourn:600000,r_shichta:1200,
+      c_cap:3500000}
+  };
+  const SHICHTA_AVG = 150; // priemerný príspevok platiaceho člena Kč/mes
+
+  let V = {...P.garaz};
+  const form = document.getElementById('form');
+
+  function buildForm(){
+    form.innerHTML = '';
+    SCHEMA.forEach((grp,gi)=>{
+      const d = document.createElement('details'); d.className='grp'; if(gi===0) d.open = true;
+      d.innerHTML = `<summary><span class="t">${grp.g}</span><span class="v" id="sum-${gi}"></span></summary><div class="fields"></div>`;
+      const box = d.querySelector('.fields');
+      grp.f.forEach(([id,label,type])=>{
+        const row = document.createElement('div'); row.className='f';
+        if(type==='bool'){
+          row.innerHTML = `<label for="in-${id}">${label}</label><input type="checkbox" id="in-${id}">`;
+          const inp=row.querySelector('input'); inp.checked=!!V[id]; inp.addEventListener('change',()=>{V[id]=inp.checked;recalc();});
+        } else {
+          row.innerHTML = `<label for="in-${id}">${label}</label><input type="number" min="0" step="any" inputmode="numeric" id="in-${id}">`;
+          const inp=row.querySelector('input'); inp.value=V[id]; inp.addEventListener('input',()=>{V[id]=Math.max(0,parseFloat(inp.value)||0);recalc();});
+        }
+        box.appendChild(row);
+      });
+      form.appendChild(d);
+    });
+  }
+
+  function model(v){
+    const subF = v.subs ? 5.5 : 5;
+    const players = (v.st_cs+v.st_lol+v.st_val+v.st_dota)*subF;
+    const coaches = v.co_cs+v.co_lol+v.co_val+v.co_dota;
+    const staff = v.s_mgr+v.s_content+v.s_social+v.s_design+v.s_acc;
+    const promo = v.p_amb + v.p_micro_n*v.p_micro_price + v.p_ads;
+    const ops = v.o_soft + (v.o_boot_n*v.o_boot_price + v.o_travel + v.o_fees)/12;
+    const monthly = players+coaches+staff+promo+ops;
+    const oneRaw = v.t_found+v.t_legal+v.t_tm+v.t_brand+v.t_web+v.t_jersey_n*v.t_jersey_price+v.t_stream+v.t_gear;
+    const one = oneRaw*1.1;
+    const rev = {
+      'Partneri': v.r_main + v.r_part_n*v.r_part_avg,
+      'Merch': v.r_merch_n*v.r_merch_margin,
+      'Granty': v.r_grant,
+      'Stream, video': v.r_creator*12,
+      'Forge Cup': v.r_tourn,
+      'Šichta': v.r_shichta*SHICHTA_AVG*12,
+      'Prize (10 %)': v.r_prize*0.10
+    };
+    const revTotal = Object.values(rev).reduce((a,b)=>a+b,0);
+    // 24-mesačný cash-flow
+    const seas = [0,0,3,1,1,1,1,1,1,1,2,3]; const sS = seas.reduce((a,b)=>a+b,0);
+    const cash=[]; let c = v.c_cap - one; let low=c, lowM=0;
+    for(let m=0;m<24;m++){
+      const y2 = m>=12, mi = m%12;
+      const g = y2?1.3:1, cg = y2?1.08:1;
+      let r = 0;
+      const spons = rev['Partneri'];
+      r += y2 ? spons/12*g : (mi>=2 ? spons/10 : 0);
+      r += rev['Merch']*seas[mi]/sS*g;
+      r += mi===5 ? rev['Granty']*g : 0;
+      r += rev['Stream, video']/12*g;
+      r += mi===8 ? rev['Forge Cup']*g : 0;
+      r += y2 ? rev['Šichta']/12*g : (mi>=3 ? rev['Šichta']/9 : 0);
+      r += y2 ? rev['Prize (10 %)']/12*g : (mi>=3 ? rev['Prize (10 %)']/9 : 0);
+      c += r - monthly*cg;
+      cash.push(c);
+      if(c<low){low=c;lowM=m+1;}
+    }
+    return {players,coaches,staff,promo,ops,monthly,one,rev,revTotal,result:revTotal-monthly*12,cash,low,lowM,year1:monthly*12+one};
+  }
+
+  function bars(el, entries, cls, max){
+    el.innerHTML = entries.map(([k,v])=>`<div class="hbar ${cls}" title="${k}: ${fmt(v)}"><span>${k}</span><div class="track"><i class="fill" style="width:${max?Math.max(v>0?1.5:0,v/max*100):0}%"></i></div><span class="val">${fmt(v)}</span></div>`).join('');
+  }
+
+  function drawCash(m){
+    const svg = document.getElementById('cash'), W=560,H=240,pl=56,pr=12,pt=14,pb=28;
+    const data = m.cash, all=[...data, 0, m.cash[0]];
+    let lo=Math.min(...all), hi=Math.max(...all); const pad=(hi-lo)*0.08||1; lo-=pad; hi+=pad;
+    const x=i=>pl+(W-pl-pr)*i/(data.length-1), y=v=>pt+(H-pt-pb)*(1-(v-lo)/(hi-lo));
+    const ticks=4; let g='';
+    for(let t=0;t<=ticks;t++){const v=lo+(hi-lo)*t/ticks; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="#33373d" stroke-width="1" stroke-dasharray="2 4"/><text x="${pl-8}" y="${y(v)+4}" text-anchor="end" font-size="10" font-family="JetBrains Mono,monospace" fill="#8d939b">${fmtK(v)}</text>`;}
+    [1,6,12,18,24].forEach(mo=>{g+=`<text x="${x(mo-1)}" y="${H-8}" text-anchor="middle" font-size="10" font-family="JetBrains Mono,monospace" fill="#8d939b">m${mo}</text>`;});
+    g+=`<line x1="${x(11.5)}" x2="${x(11.5)}" y1="${pt}" y2="${H-pb}" stroke="#33373d"/><text x="${x(11.5)+4}" y="${pt+10}" font-size="10" fill="#8d939b" font-family="JetBrains Mono,monospace">rok 2</text>`;
+    const zero = y(0);
+    g+=`<line x1="${pl}" x2="${W-pr}" y1="${zero}" y2="${zero}" stroke="#8d939b" stroke-width="1"/>`;
+    const pts=data.map((v,i)=>`${x(i)},${y(v)}`).join(' ');
+    g+=`<defs><linearGradient id="cf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6b1a" stop-opacity=".35"/><stop offset="1" stop-color="#ff6b1a" stop-opacity="0"/></linearGradient><clipPath id="above"><rect x="0" y="0" width="${W}" height="${zero}"/></clipPath><clipPath id="below"><rect x="0" y="${zero}" width="${W}" height="${H}"/></clipPath></defs>`;
+    g+=`<polygon points="${x(0)},${zero} ${pts} ${x(data.length-1)},${zero}" fill="url(#cf)" clip-path="url(#above)"/>`;
+    g+=`<polygon points="${x(0)},${zero} ${pts} ${x(data.length-1)},${zero}" fill="#ff5a4f" opacity=".18" clip-path="url(#below)"/>`;
+    g+=`<polyline points="${pts}" fill="none" stroke="#ff6b1a" stroke-width="2" stroke-linejoin="round"/>`;
+    const last=data.length-1;
+    g+=`<circle cx="${x(last)}" cy="${y(data[last])}" r="4" fill="#ffc857" stroke="#1a1c1f" stroke-width="2"/>`;
+    g+=`<line id="xh" x1="0" x2="0" y1="${pt}" y2="${H-pb}" stroke="#d6dadf" stroke-opacity=".4" visibility="hidden"/><circle id="xd" r="4" fill="#ffc857" stroke="#1a1c1f" stroke-width="2" visibility="hidden"/>`;
+    g+=`<rect id="hit" x="${pl}" y="${pt}" width="${W-pl-pr}" height="${H-pt-pb}" fill="transparent"/>`;
+    svg.innerHTML=g;
+    const tip=document.getElementById('tip'), box=document.getElementById('cashbox');
+    const hit=svg.querySelector('#hit'), xh=svg.querySelector('#xh'), xd=svg.querySelector('#xd');
+    function move(ev){
+      const r=svg.getBoundingClientRect(); const px=(ev.clientX-r.left)/r.width*W;
+      const i=Math.max(0,Math.min(last,Math.round((px-pl)/(W-pl-pr)*last)));
+      xh.setAttribute('x1',x(i));xh.setAttribute('x2',x(i));xh.setAttribute('visibility','visible');
+      xd.setAttribute('cx',x(i));xd.setAttribute('cy',y(data[i]));xd.setAttribute('visibility','visible');
+      const br=box.getBoundingClientRect();
+      tip.style.left=(r.left-br.left + x(i)/W*r.width)+'px'; tip.style.top=(r.top-br.top + y(data[i])/H*r.height)+'px';
+      tip.innerHTML=`Mesiac ${i+1} · <b class="${data[i]<0?'neg':''}">${fmt(data[i])}</b>`; tip.style.opacity=1;
+    }
+    hit.addEventListener('pointermove',move);
+    hit.addEventListener('pointerleave',()=>{tip.style.opacity=0;xh.setAttribute('visibility','hidden');xd.setAttribute('visibility','hidden');});
+    const sub=document.getElementById('cash-sub');
+    sub.innerHTML = m.low<0
+      ? `<span class="warn neg">Kapitál nestačí</span> Najnižší bod je ${fmt(m.low)} v mesiaci ${m.lowM}. Treba navýšiť kapitál alebo príjmy.`
+      : `Najnižší stav je ${fmt(m.low)} v mesiaci ${m.lowM}. Kapitál pokryje rozbeh.`;
+  }
+
+  function recalc(){
+    const m = model(V);
+    document.getElementById('k-one').textContent = fmt(m.one);
+    document.getElementById('k-mon').textContent = fmt(m.monthly);
+    document.getElementById('k-rev').textContent = fmt(m.revTotal);
+    const kr=document.getElementById('k-res'); kr.textContent=(m.result>=0?'+':'−')+fmt(Math.abs(m.result)); kr.className=m.result>=0?'pos':'neg';
+    document.getElementById('k-res-n').textContent = m.result>=0 ? 'prevádzka sa sama uživí' : 'treba dofinancovať';
+    document.getElementById('k-res-n').className = m.result>=0?'pos':'neg';
+    const costs=[['Hráči',m.players],['Tréneri',m.coaches],['Štáb',m.staff],['Propagácia',m.promo],['Prevádzka',m.ops]];
+    bars(document.getElementById('costbars'), costs, '', Math.max(...costs.map(c=>c[1])));
+    const revs=Object.entries(m.rev).sort((a,b)=>b[1]-a[1]);
+    bars(document.getElementById('revbars'), revs, 'rev', Math.max(...revs.map(c=>c[1])));
+    drawCash(m);
+    const sums=[m.players+m.coaches, m.staff, m.promo, m.ops, m.one, m.revTotal, V.c_cap];
+    const unit=['/ mes','/ mes','/ mes','/ mes','','/ rok',''];
+    sums.forEach((s,i)=>{const el=document.getElementById('sum-'+i); if(el) el.textContent=fmt(s)+(unit[i]?' '+unit[i]:'');});
+  }
+
+  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-pressed', t===b?'true':'false'));
+    V={...P[b.dataset.sc]}; buildForm(); recalc();
+  }));
+
+  document.getElementById('hf-y1').textContent = fmtK(model(P.garaz).year1).replace(' tis.','k').replace(' mil.','M');
+  buildForm(); recalc();
+})();
+</script>
+
+</body>
+</html>
