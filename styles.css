@@ -348,6 +348,7 @@ details.grp summary .v{font:.84rem var(--f-mono);color:var(--ash)}
 .policy .panel{border-top:3px solid var(--pc)}
 .policy .panel h3{margin:.9rem 0 .6rem;font-size:1.15rem}
 .policy .panel li{font-size:.9rem;margin-bottom:.5rem}
+@media (max-width:1020px){.policy .g3{grid-template-columns:1fr}}
 .pol-no{--pc:var(--bad)}.pol-if{--pc:var(--spark)}.pol-alt{--pc:var(--good)}
 
 /* ---------- live ---------- */
