@@ -309,7 +309,8 @@ const IG = [
   ['#ff6b1a','<span style="color:#1a0b02">Zdař<br>Bůh</span>']
 ];
 $('#ig-grid').innerHTML = IG.map(([bg,t]) => `<div style="background:${bg}">${t}</div>`).join('');
-const CAL = {1:[['c1','Teaser: pec sa rozpaľuje']],2:[['c4','Discord otvorený']],4:[['c1','Teaser: šev']],7:[['c2','Odliatie: CS2']],9:[['c4','Q&A s Koksom']],11:[['c3','FACEIT liga']],14:[['c2','Odliatie: LoL']],16:[['c4','Watch party']],18:[['c3','HM Winter']],21:[['c2','Odliatie: Valorant']],23:[['c3','Premier']],24:[['c4','Šichta ep. 1']],26:[['c2','Odliatie: Dota 2']],28:[['c1','Dres + Forge Cup + Šichta']]};
+// p1 Fárame · p2 Šichta · p3 Odpich · p4 Halda · p5 Zdař Bůh
+const CAL = {1:[['p5','Teaser: pec sa rozpaľuje']],2:[['p5','Discord otvorený']],4:[['p5','Teaser: šev']],5:[['p5','FB: 1828 → 2026']],7:[['p2','Odliatie: CS2']],9:[['p2','Q&A s Koksom']],11:[['p3','FACEIT liga']],12:[['p1','Clutch týždňa']],13:[['p4','Haldová štatistika']],14:[['p2','Odliatie: LoL']],16:[['p5','Watch party']],18:[['p3','HM Winter']],19:[['p1','Clutch týždňa']],20:[['p4','Haldová štatistika']],21:[['p2','Odliatie: Valorant']],23:[['p3','Premier']],24:[['p2','Šichta ep. 1']],25:[['p5','Polar TV: reportáž']],26:[['p2','Odliatie: Dota 2'],['p1','Clutch týždňa']],27:[['p4','Haldová štatistika']],28:[['p5','Dres + Forge Cup + Šichta']]};
 $('#cal').innerHTML = Array.from({length:28},(_,i)=>i+1).map(d => `<div><b>${d}</b>${(CAL[d]||[]).map(([c,t])=>`<i class="${c}">${t}</i>`).join('')}</div>`).join('');
 
 /* ---------- živé hlasovanie (verejný počítadlový API, funguje na GitHub Pages) ---------- */

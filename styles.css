@@ -304,6 +304,15 @@ details.grp summary .v{font:.84rem var(--f-mono);color:var(--ash)}
 .overlay .sb .b{background:var(--plate-2)}
 .overlay .cam{position:absolute;right:3%;bottom:6%;width:22%;aspect-ratio:4/3;border:2px solid var(--melt);background:linear-gradient(160deg,#2a2e33,#111)}
 .overlay .tick{position:absolute;left:0;right:0;bottom:0;background:rgba(15,16,18,.92);border-top:2px solid var(--melt);font:.62rem var(--f-mono);padding:.35rem .7rem;white-space:nowrap;overflow:hidden}
+.pillars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem}
+.pil{background:var(--plate);border:1px solid var(--rivet);border-top:3px solid var(--pc);padding:1.1rem;display:flex;flex-direction:column;gap:.45rem;min-width:0}
+.pil b{font:900 1.6rem/1 var(--f-display);text-transform:uppercase}
+.pil em{font:normal .7rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--pc)}
+.pil p{font-size:.88rem;color:var(--ash);flex:1}
+.pil span{font:.7rem var(--f-mono);color:var(--steel)}
+.p1{--pc:var(--melt)}.p2{--pc:var(--temper)}.p3{--pc:var(--spark)}.p4{--pc:var(--steel)}.p5{--pc:var(--good)}
+.cal i.p1,.cal i.p2,.cal i.p3,.cal i.p4,.cal i.p5{border-color:var(--pc)}
+.legend .p1::before,.legend .p2::before,.legend .p3::before,.legend .p4::before,.legend .p5::before{background:var(--pc)}
 .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .cal div{background:var(--plate);border:1px solid var(--rivet);min-height:64px;padding:.35rem;font-size:.68rem;min-width:0;overflow:hidden}
 .cal div b{font:.66rem var(--f-mono);color:var(--ash);display:block}
@@ -396,6 +405,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
   .tl{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2rem}
   .swatches{grid-template-columns:repeat(3,minmax(0,1fr))}
   .lex{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pillars{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media (max-width:720px){
   .g2,.g3,.g4,.tiers,.swot,.mock-grid,.opts,.bracket{grid-template-columns:1fr}
@@ -409,6 +419,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
   .f{grid-template-columns:1fr 110px}
   .tl{grid-template-columns:1fr}
   .swatches,.lex{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pillars{grid-template-columns:1fr}
   .roster{grid-template-columns:repeat(2,minmax(0,1fr))}
   .story::before,.story .fill{left:22px}
   .row{grid-template-columns:44px 1fr;padding-block:.6rem}
