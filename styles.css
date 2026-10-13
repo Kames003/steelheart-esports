@@ -215,6 +215,7 @@ tfoot td{font-weight:700;background:var(--plate-2)}
 .node span{font-size:.8rem;color:var(--ash);display:block}
 .node .who{font:.72rem var(--f-mono);color:var(--temper);margin-top:.35rem}
 .node .person{font:600 .8rem var(--f-mono);color:var(--spark);margin-top:.2rem}
+.node .person.tbd{color:var(--ash);font-weight:400;font-style:italic;opacity:.7}
 .org .conn{height:20px;width:1px;background:var(--rivet-2);margin:0 auto}
 
 /* ---------- economics ---------- */
