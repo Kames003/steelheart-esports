@@ -365,6 +365,57 @@ $('#join-btn').addEventListener('click', async () => {
 refresh();
 setInterval(() => { if (!document.hidden) refresh(); }, 4000);
 
+/* ---------- kvíz z histórie (rovnaké počítadlá ako hlasovanie) ---------- */
+const QUIZ = [
+  {id:'q1', q:'Kde sa v roku 1972 konal prvý esportový turnaj?', a:['MIT, hra Pong','Stanford, hra Spacewar!','Tokio, hra Space Invaders','Atari, Kalifornia'], ok:1,
+   fact:'Intergalactic Spacewar Olympics na Stanforde. Víťaz dostal ročné predplatné Rolling Stone.', src:36},
+  {id:'q2', q:'Aký bol prize pool The International 2017 v Dote 2?', a:['2,5 mil. $','11 mil. $','24,7 mil. $','40 mil. $'], ok:2,
+   fact:'Vyše 24,6 mil. $. Väčšinu z nich zaplatili samotní hráči nákupom Battle Passu.', src:50},
+  {id:'q3', q:'Kde vznikla v roku 2018 prvá esportová učebňa v Česku?', a:['ČVUT Praha','Masarykova univerzita Brno','VŠB-TUO Ostrava','TU Liberec'], ok:2,
+   fact:'Učebňa EB317 na VŠB, teda presne tam, kde začína Steelheart.', src:10}
+];
+const qc = {};
+let quizOn = false, quizSeen = false;
+const qKey = (q,i) => `${q.id}-${'abcd'[i]}`;
+$('#qs').innerHTML = QUIZ.map((q,n) => `<div class="qq" id="qq-${q.id}"><p class="qn">${n+1} / ${QUIZ.length}</p><h4>${q.q}</h4><div class="qa">${q.a.map((t,i) => `<button type="button" class="qopt" data-q="${q.id}" data-i="${i}"><span class="qt">${t}</span><span class="qp" id="qp-${q.id}-${i}"></span><span class="qb" id="qb-${q.id}-${i}"></span></button>`).join('')}</div><p class="qf" id="qf-${q.id}"></p></div>`).join('');
+function renderQuiz(){
+  QUIZ.forEach(q => {
+    const mine = store.get('she-'+q.id), show = mine !== null || quizOn;
+    const tot = q.a.reduce((s,_,i) => s + (qc[qKey(q,i)]||0), 0);
+    q.a.forEach((_,i) => {
+      const b = document.querySelector(`.qopt[data-q="${q.id}"][data-i="${i}"]`), c = qc[qKey(q,i)]||0, p = tot ? Math.round(c/tot*100) : 0;
+      b.classList.toggle('ok', show && i === q.ok);
+      b.classList.toggle('bad', show && mine === String(i) && i !== q.ok);
+      b.setAttribute('aria-pressed', mine === String(i) ? 'true' : 'false');
+      $(`#qp-${q.id}-${i}`).textContent = show && online ? p + ' %' : '';
+      $(`#qb-${q.id}-${i}`).style.width = show ? p + '%' : '0';
+    });
+    $('#qf-'+q.id).innerHTML = show ? `${q.fact}<sup class="src"><a href="#z${q.src}">${q.src}</a></sup>${online ? ` <span class="mono">· ${tot} odpovedí</span>` : ''}` : '';
+  });
+}
+async function refreshQuiz(){
+  const keys = QUIZ.flatMap(q => q.a.map((_,i) => qKey(q,i)));
+  try { (await Promise.all(keys.map(get))).forEach((v,i) => qc[keys[i]] = v); } catch(e){}
+  renderQuiz();
+}
+$$('.qopt').forEach(b => b.addEventListener('click', async () => {
+  const q = QUIZ.find(x => x.id === b.dataset.q), i = +b.dataset.i;
+  if (store.get('she-'+q.id) !== null) return;
+  store.set('she-'+q.id, String(i));
+  try { qc[qKey(q,i)] = await hit(qKey(q,i)); } catch(e){ qc[qKey(q,i)] = (qc[qKey(q,i)]||0) + 1; }
+  renderQuiz();
+}));
+$('#quiz-reveal').addEventListener('click', () => {
+  quizOn = !quizOn;
+  $('#quiz-reveal').textContent = quizOn ? 'Skryť odpovede' : 'Odhaliť správne odpovede';
+  refreshQuiz();
+});
+// kvíz sa obnovuje len keď je na obrazovke, aby sme zbytočne nezaťažovali počítadlá
+if ('IntersectionObserver' in window) new IntersectionObserver(es => { quizSeen = es[0].isIntersecting; if (quizSeen) refreshQuiz(); }).observe($('#kviz'));
+else quizSeen = true;
+renderQuiz();
+setInterval(() => { if (!document.hidden && quizSeen) refreshQuiz(); }, 5000);
+
 /* ---------- QR + režim prezentácie ---------- */
 function qr(el, size){
   el.innerHTML = '';
